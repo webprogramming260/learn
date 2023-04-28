@@ -26,3 +26,7 @@ Vite uses ESBuild to do all the bundling. ESBuild is built with Go and boosts sp
 ## Implemented Markdown rendering
 
 Using [Markdown-it](https://github.com/markdown-it/markdown-it) and [highlight.js](https://highlightjs.org/) we can render the GitHub pages.
+
+## Converted to React
+
+Added components for the application
