@@ -10,5 +10,9 @@
   },
   "devDependencies": {
     "vite": "^4.3.2"
+  },
+  "dependencies": {
+    "highlight.js": "^11.7.0",
+    "markdown-it": "^13.0.1"
   }
 }
