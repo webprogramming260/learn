@@ -1,0 +1,21 @@
+.card {
+  margin: 2em;
+  text-align: start;
+}
+
+.hljs {
+  background-color: #eee;
+  padding: 1em;
+  border-radius: 5px;
+}
+
+.topic-nav {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  background-color: #99999d45;
+}
+
+.topic-nav a {
+  padding: 0.5em 1em;
+}

@@ -1,10 +1,10 @@
 import React from "react";
-import Page from "./page";
+import TopicList from "./topicList";
 
 export default function App() {
   return (
     <>
-      <Page url="https://github.com/webprogramming260/.github/blob/main/profile/html/media/media.md" />
+      <TopicList url="https://github.com/webprogramming260/.github/blob/main/profile/html/media/media.md" />
     </>
   );
 }

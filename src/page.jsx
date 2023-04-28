@@ -3,7 +3,7 @@ import React from "react";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
-import "./style.css";
+import "./page.css";
 
 const md = MarkdownIt({
   highlight: function (str, lang) {
@@ -21,7 +21,7 @@ const md = MarkdownIt({
   },
 });
 
-export default function Page({ url }) {
+export default function Page({ url, onNav }) {
   const [h, setH] = React.useState("Loading...");
 
   const reg = /\!\[(.*)\]\((.*)\)/g;
@@ -45,13 +45,16 @@ export default function Page({ url }) {
   }, []);
 
   return (
-    <div>
-      <h1>Lee S Jensen</h1>
+    <>
+      <div className="topic-nav">
+        <a onClick={() => onNav("prev")}>Prev</a>
+        <a onClick={() => onNav("next")}>Next</a>
+      </div>
       <div
         id="md"
         className="card"
         dangerouslySetInnerHTML={{ __html: h }}
       ></div>
-    </div>
+    </>
   );
 }
