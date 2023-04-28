@@ -22,3 +22,7 @@ npm run dev
 ## Under the covers
 
 Vite uses ESBuild to do all the bundling. ESBuild is built with Go and boosts speeds of 30X webpack.
+
+## Implemented Markdown rendering
+
+Using [Markdown-it](https://github.com/markdown-it/markdown-it) and [highlight.js](https://highlightjs.org/) we can render the GitHub pages.
