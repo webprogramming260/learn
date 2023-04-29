@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useParams} from 'react-router-dom';
 
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
@@ -7,6 +7,10 @@ import 'highlight.js/styles/github.css';
 import './page.css';
 
 export default function Page({url, onNav}) {
+  const wildcard = useParams()['*'];
+  if (!url) {
+    url = 'https://github.com/webprogramming260/.github/blob/main/profile/' + wildcard;
+  }
   const [h, setH] = React.useState('Loading...');
 
   React.useEffect(() => {
@@ -31,7 +35,7 @@ export default function Page({url, onNav}) {
   return (
     <>
       <div className='topic-nav'>
-        <a onClick={() => onNav('prev')}>Prevx</a>
+        <a onClick={() => onNav('prev')}>Prev</a>
         <NavLink to='/'>Topics</NavLink>
         <a href={url}>GitHub</a>
         <a onClick={() => onNav('next')}>Next</a>
