@@ -1,25 +1,10 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom';
 
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
 import './page.css';
-
-const md = MarkdownIt({
-  highlight: function (str, lang) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return (
-          '<pre class="hljs"><code>' +
-          hljs.highlight(str, {language: lang, ignoreIllegals: true}).value +
-          `</code></pre>`
-        );
-      } catch (__) {}
-    }
-
-    return '';
-  },
-});
 
 export default function Page({url, onNav}) {
   const [h, setH] = React.useState('Loading...');
@@ -46,7 +31,8 @@ export default function Page({url, onNav}) {
   return (
     <>
       <div className='topic-nav'>
-        <a onClick={() => onNav('prev')}>Prev</a>
+        <a onClick={() => onNav('prev')}>Prevx</a>
+        <NavLink to='/'>Topics</NavLink>
         <a href={url}>GitHub</a>
         <a onClick={() => onNav('next')}>Next</a>
       </div>
@@ -54,3 +40,19 @@ export default function Page({url, onNav}) {
     </>
   );
 }
+
+const md = MarkdownIt({
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return (
+          '<pre class="hljs"><code>' +
+          hljs.highlight(str, {language: lang, ignoreIllegals: true}).value +
+          `</code></pre>`
+        );
+      } catch (__) {}
+    }
+
+    return '';
+  },
+});

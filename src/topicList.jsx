@@ -1,4 +1,5 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom';
 
 import Page from './page';
 
@@ -31,25 +32,23 @@ export default function TopicList() {
       });
   }, []);
 
-  function navPage(topic) {
-    console.log(topic);
-  }
-
-  console.log(i);
-
   const o = [];
   i.forEach((ii) => {
-    o.push(<h3>{ii.title}</h3>);
-
     const ol = [];
     ii.items.forEach((li) => {
-      ol.push(<li>{li.title}</li>);
+      ol.push(
+        <li key={li.title}>
+          <NavLink to={`page/${li.path}`}>{li.title}</NavLink>
+        </li>
+      );
     });
-    o.push(<ul>{ol}</ul>);
+    o.push(
+      <div key={ii.title}>
+        <h3>{ii.title}</h3>
+        <ul>{ol}</ul>
+      </div>
+    );
   });
 
-  return (
-    <div>{o}</div>
-    //    <Page url='https://github.com/webprogramming260/.github/blob/main/profile/html/media/media.md' onNav={navPage} />
-  );
+  return <div>{o}</div>;
 }
