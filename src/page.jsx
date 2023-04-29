@@ -24,8 +24,6 @@ const md = MarkdownIt({
 export default function Page({url, onNav}) {
   const [h, setH] = React.useState('Loading...');
 
-  const reg = /\!\[(.*)\]\((.*)\)/g;
-
   React.useEffect(() => {
     const rawUrl = url.replace(
       'github.com/webprogramming260/.github/blob',
@@ -36,6 +34,7 @@ export default function Page({url, onNav}) {
     fetch(rawUrl)
       .then((r) => r.text())
       .then((body) => {
+        const reg = /\!\[(.*)\]\((.*)\)/g;
         const up = body.replaceAll(reg, `![$1](${rootUrl}$2)`);
 
         let ht = md.render(up);
