@@ -36,10 +36,10 @@ export default function Page({url, onNav}) {
   return (
     <>
       <div className='topic-nav'>
-        <a onClick={() => onNav('prev', url)}>Prev</a>
+        <NavLink to={onNav('prev', url)}>Prev</NavLink>
         <NavLink to='/'>Topics</NavLink>
         <a href={url}>GitHub</a>
-        <a onClick={() => onNav('next', url)}>Next</a>
+        <NavLink to={onNav('next', url)}>Next</NavLink>
       </div>
       <div id='md' className='card' dangerouslySetInnerHTML={{__html: h}}></div>
     </>

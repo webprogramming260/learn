@@ -1,11 +1,9 @@
 import React from 'react';
 import TopicList from './topicList';
 import Page from './page';
-import {Route, Routes, useNavigate} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 
 export default function App() {
-  const navigate = useNavigate();
-
   function navPage(direction, topicUrl) {
     let prev;
     let next = false;
@@ -13,8 +11,7 @@ export default function App() {
       for (const topic of section.topics) {
         if (next) {
           console.log('Found topic ', topic);
-          navigate(`/page/${topic.path}`);
-          return;
+          return `/x/${topic.path}`;
         }
 
         if (topicUrl.endsWith(topic.path)) {
@@ -22,9 +19,7 @@ export default function App() {
             next = true;
           } else if (prev) {
             console.log('Found topic ', prev);
-            //            navigate(`/page/${topic.path}`);
-            navigate('/xxxx');
-            return;
+            return `/x/${prev.path}`;
           }
         } else if (direction === 'prev') {
           prev = topic;
@@ -32,8 +27,7 @@ export default function App() {
       }
     }
 
-    console.log('nav to topics');
-    redirect(`/`);
+    return `/`;
   }
 
   const [topics, setTopics] = React.useState([]);
@@ -49,7 +43,7 @@ export default function App() {
       <p>CS 260</p>
       <Routes>
         <Route path='/' element={<TopicList topics={topics} />} exact />
-        <Route path='/page/*' element={<Page onNav={navPage} />} />
+        <Route path='/x/*' element={<Page onNav={navPage} />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

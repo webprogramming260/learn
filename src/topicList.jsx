@@ -1,8 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 
-import Page from './page';
-
 export default function TopicList({topics}) {
   const o = [];
   topics.forEach((section) => {
@@ -10,7 +8,7 @@ export default function TopicList({topics}) {
     section.topics.forEach((topic) => {
       ol.push(
         <li key={topic.title}>
-          <NavLink to={`page/${topic.path}`}>{topic.title}</NavLink>
+          <NavLink to={`/x/${topic.path}`}>{topic.title}</NavLink>
         </li>
       );
     });
