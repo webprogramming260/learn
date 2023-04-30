@@ -5,18 +5,18 @@ import Page from './page';
 
 export default function TopicList({topics}) {
   const o = [];
-  topics.forEach((ii) => {
+  topics.forEach((section) => {
     const ol = [];
-    ii.items.forEach((li) => {
+    section.topics.forEach((topic) => {
       ol.push(
-        <li key={li.title}>
-          <NavLink to={`page/${li.path}`}>{li.title}</NavLink>
+        <li key={topic.title}>
+          <NavLink to={`page/${topic.path}`}>{topic.title}</NavLink>
         </li>
       );
     });
     o.push(
-      <div key={ii.title}>
-        <h3>{ii.title}</h3>
+      <div key={section.title}>
+        <h3>{section.title}</h3>
         <ul>{ol}</ul>
       </div>
     );
