@@ -8,7 +8,7 @@ export default function TopicList({topics}) {
     section.topics.forEach((topic) => {
       ol.push(
         <li key={topic.title}>
-          <NavLink to={`/x/${topic.path}`}>{topic.title}</NavLink>
+          <NavLink to={`/page/${topic.path}`}>{topic.title}</NavLink>
         </li>
       );
     });

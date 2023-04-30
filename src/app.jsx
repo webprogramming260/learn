@@ -10,16 +10,14 @@ export default function App() {
     for (const section of topics) {
       for (const topic of section.topics) {
         if (next) {
-          console.log('Found topic ', topic);
-          return `/x/${topic.path}`;
+          return `/page/${topic.path}`;
         }
 
         if (topicUrl.endsWith(topic.path)) {
           if (direction === 'next') {
             next = true;
           } else if (prev) {
-            console.log('Found topic ', prev);
-            return `/x/${prev.path}`;
+            return `/page/${prev.path}`;
           }
         } else if (direction === 'prev') {
           prev = topic;
@@ -43,7 +41,7 @@ export default function App() {
       <p>CS 260</p>
       <Routes>
         <Route path='/' element={<TopicList topics={topics} />} exact />
-        <Route path='/x/*' element={<Page onNav={navPage} />} />
+        <Route path='/page/*' element={<Page onNav={navPage} />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>
@@ -71,7 +69,8 @@ async function loadTopics() {
     const topics = [];
     sections.push({title: blockMatch[1], topics: topics});
     for (let lineMatch of blockMatch[0].matchAll(lineReg)) {
-      topics.push({assignment: !!lineMatch[1], title: lineMatch[2], path: lineMatch[3]});
+      const path = lineMatch[3].replaceAll('.', '_');
+      topics.push({assignment: !!lineMatch[1], title: lineMatch[2], path: path});
     }
   }
   return sections;
