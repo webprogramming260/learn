@@ -1,0 +1,8 @@
+.due {
+  color: rgb(253, 252, 174);
+}
+
+.past-due {
+  text-decoration: line-through;
+  color: rgb(106, 106, 106);
+}

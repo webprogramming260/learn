@@ -1,7 +1,7 @@
 import React from 'react';
 import TopicList from './topicList';
 import Page from './page';
-import {Route, Routes} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 export default function App() {
   function navPage(direction, topicUrl) {
@@ -62,16 +62,29 @@ async function loadTopics() {
 
   const r = await fetch(rawUrl);
   const body = await r.text();
-  const blockReg = /^## (.*)$[^##]*/gm;
-  const lineReg = /- (.*)\[(.*)]\((.*)\)$/gm;
+  const blockRegEx = /^## (.*)$[^##]*/gm;
+  const lineRegEx = /- (.*)\[(.*)]\(([^ ]*)\)( _\(\w* (.*)\)_)?$/gm;
   const sections = [];
-  for (let blockMatch of body.matchAll(blockReg)) {
+  for (let blockMatch of body.matchAll(blockRegEx)) {
     const topics = [];
-    sections.push({title: blockMatch[1], topics: topics});
-    for (let lineMatch of blockMatch[0].matchAll(lineReg)) {
+    sections.push({ title: blockMatch[1], topics: topics });
+    for (let lineMatch of blockMatch[0].matchAll(lineRegEx)) {
       const path = lineMatch[3].replaceAll('.', '_');
-      topics.push({assignment: !!lineMatch[1], title: lineMatch[2], path: path});
+      topics.push({ assignment: !!lineMatch[1], title: lineMatch[2], path: path, due: parseDate(lineMatch[5]) });
     }
   }
   return sections;
+}
+
+function parseDate(textDate) {
+  if (textDate) {
+    const parts = textDate.split('/');
+    if (parts.length === 2) {
+      let date = new Date();
+      date.setMonth(parts[0] - 1);
+      date.setDate(parts[1]);
+      return date;
+    }
+  }
+  return null;
 }

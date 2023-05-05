@@ -1,8 +1,10 @@
-# vite-vanilla
+# 260 Instruction
 
-Vite with vanilla HTML, CS, and JS
+The project reads GitHub markdown files and creates an app specific view of their content for easy navigation.
 
-## Getting started
+## vite-vanilla
+
+Created the basic project using vite-vanilla
 
 ```sh
 npm init @vite/latest vite-vanilla
@@ -29,4 +31,70 @@ Using [Markdown-it](https://github.com/markdown-it/markdown-it) and [highlight.j
 
 ## Converted to React
 
-Added components for the application
+Added components for the application. Vite supports this directly and so I just had to start writing JSX and import React.
+
+```jsx
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+export default function App() {
+  const [topics, setTopics] = React.useState([]);
+
+  React.useEffect(() => {
+    (async () => {
+      setTopics(await loadTopics());
+    })();
+  }, []);
+
+  return (
+    <>
+      <p>CS 260</p>
+      <Routes>
+        <Route path='/' element={<TopicList topics={topics} />} exact />
+        <Route path='/page/*' element={<Page onNav={navPage} />} />
+        <Route path='*' element={<NotFound />} />
+      </Routes>
+    </>
+  );
+}
+```
+
+## Converted topicList to TypeScript
+
+Just rename the file to `tsx` and start using TypeScript.
+
+```tsx
+export default function TopicList({ topics }) {
+  function getDue(due: Date) {
+    if (due) {
+      if (Date.now() > due.getTime()) {
+        <span className='due'>☑ {due.getUTCDate()}</span>;
+      } else {
+        <span className='due'>xx☑ {due.getUTCDate()}</span>;
+      }
+    }
+    return '';
+  }
+  const o: JSX.Element[] = [];
+  topics.forEach((section) => {
+    const ol: JSX.Element[] = [];
+    section.topics.forEach((topic) => {
+      ol.push(
+        <li key={topic.title}>
+          <NavLink to={`/page/${topic.path}`}>{topic.title}</NavLink> {getDue(topic.due)}
+        </li>
+      );
+    });
+
+    if (ol.length > 0) {
+      o.push(
+        <div key={section.title}>
+          <h3>{section.title}</h3>
+          <ul>{ol}</ul>
+        </div>
+      );
+    }
+  });
+
+  return <div>{o}</div>;
+}
+```
