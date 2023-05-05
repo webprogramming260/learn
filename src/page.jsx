@@ -10,15 +10,14 @@ export default function Page({ onNav }) {
   const location = useLocation();
   const wildcard = useParams()['*'];
   const url = 'https://github.com/webprogramming260/.github/blob/main/profile/' + wildcard;
-  //  const [h, setH] = React.useState('Loading...');
-  const [h, setH] = React.useState(url);
+  const gitHubUrl = url.replace('_', '.');
+  const [h, setH] = React.useState('Loading...');
 
   React.useEffect(() => {
-    let rawUrl = url.replace(
+    let rawUrl = gitHubUrl.replace(
       'github.com/webprogramming260/.github/blob',
       'raw.githubusercontent.com/webprogramming260/.github'
     );
-    rawUrl = rawUrl.replace('_', '.');
     const [, rootUrl] = /(.*\/)([^\/]*)$/.exec(rawUrl);
 
     fetch(rawUrl)
@@ -39,7 +38,7 @@ export default function Page({ onNav }) {
       <div className='topic-nav'>
         <NavLink to={onNav('prev', url)}>Prev</NavLink>
         <NavLink to='/'>Topics</NavLink>
-        <a href={url}>GitHub</a>
+        <a href={gitHubUrl}>GitHub</a>
         <NavLink to={onNav('next', url)}>Next</NavLink>
       </div>
       <div id='md' className='card' dangerouslySetInnerHTML={{ __html: h }}></div>
