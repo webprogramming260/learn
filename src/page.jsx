@@ -28,6 +28,7 @@ export default function Page({ onNav }) {
 
         let ht = md.render(up);
         ht = ht.replaceAll('☑', '<span class="assignment">☑</span>');
+        ht = ht.replaceAll('Canvas', '<a href="https://byu.instructure.com/courses/21349/assignments">Canvas</a>');
 
         setH(ht);
       });
