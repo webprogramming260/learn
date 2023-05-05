@@ -1,12 +1,12 @@
 import React from 'react';
-import {NavLink, useParams, useLocation} from 'react-router-dom';
+import { NavLink, useParams, useLocation } from 'react-router-dom';
 
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
 import './page.css';
 
-export default function Page({onNav}) {
+export default function Page({ onNav }) {
   const location = useLocation();
   const wildcard = useParams()['*'];
   const url = 'https://github.com/webprogramming260/.github/blob/main/profile/' + wildcard;
@@ -41,7 +41,7 @@ export default function Page({onNav}) {
         <a href={url}>GitHub</a>
         <NavLink to={onNav('next', url)}>Next</NavLink>
       </div>
-      <div id='md' className='card' dangerouslySetInnerHTML={{__html: h}}></div>
+      <div id='md' className='card' dangerouslySetInnerHTML={{ __html: h }}></div>
     </>
   );
 }
@@ -50,11 +50,7 @@ const md = MarkdownIt({
   highlight: function (str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
-        return (
-          '<pre class="hljs"><code>' +
-          hljs.highlight(str, {language: lang, ignoreIllegals: true}).value +
-          `</code></pre>`
-        );
+        return '<pre class="hljs">' + hljs.highlight(str, { language: lang, ignoreIllegals: true }).value + `</pre>`;
       } catch (__) {}
     }
 

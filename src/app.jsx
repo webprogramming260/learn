@@ -2,6 +2,7 @@ import React from 'react';
 import TopicList from './topicList';
 import Page from './page';
 import { Route, Routes } from 'react-router-dom';
+import './app.css';
 
 export default function App() {
   function navPage(direction, topicUrl) {
@@ -38,7 +39,9 @@ export default function App() {
 
   return (
     <>
-      <p>CS 260</p>
+      <nav>
+        <h1>CS 260 - Web Programming</h1>
+      </nav>
       <Routes>
         <Route path='/' element={<TopicList topics={topics} />} exact />
         <Route path='/page/*' element={<Page onNav={navPage} />} />
