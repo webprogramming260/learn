@@ -28,6 +28,7 @@ export default function Page({ onNav }) {
         const up = body.replaceAll(reg, `![$1](${rootUrl}$2)`);
 
         let ht = md.render(up);
+        ht = ht.replaceAll('☑', '<span class="assignment">☑</span>');
 
         setH(ht);
       });

@@ -7,7 +7,7 @@ export default function TopicList({ topics }) {
     if (dueDate) {
       const now = new Date();
       const due = now.getTime() < dueDate.getTime();
-      return <span className={due ? 'due' : 'past-due'}>{`${dueDate.getMonth() + 1}/${dueDate.getDate()}`}</span>;
+      return <span className={due ? 'due' : 'past-due'}>({`${dueDate.getMonth() + 1}/${dueDate.getDate()}`})</span>;
     }
     return '';
   }

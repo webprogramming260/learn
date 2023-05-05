@@ -1,8 +1,10 @@
 .due {
-  color: rgb(114 199 57);
+  color: #66c7ab;
+  font-size: smaller;
 }
 
 .past-due {
   text-decoration: line-through;
   color: rgb(106, 106, 106);
+  font-size: smaller;
 }
