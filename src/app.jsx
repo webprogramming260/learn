@@ -38,8 +38,23 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="text-gray-950 dark:text-gray-200 bg-gray-100 dark:bg-gray-950">
-        <h1 className="font-bold text-2xl p-4 text-gray-800 dark:text-gray-200 border-b-4 border-gray-900">
+      <div className="text-stone-950 dark:text-stone-300 bg-stone-100 dark:bg-stone-900 flex flex-col">
+        <h1 className="font-bold text-2xl p-4 text-stone-800 dark:text-stone-300 border-b-4 border-stone-900 dark:border-stone-400 flex flex-row align-middle justify-start">
+          <svg
+            className="fill-slate-600 h-8 mx-3 inline"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"
+            ></path>
+          </svg>
           CS 260 - Web Programming
         </h1>
         <Routes>
