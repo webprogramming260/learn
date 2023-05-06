@@ -1,8 +1,8 @@
-import React from 'react';
-import TopicList from './topicList';
-import Page from './page';
-import { Route, Routes } from 'react-router-dom';
-import './app.css';
+import React from "react";
+import TopicList from "./topicList";
+import Page from "./page";
+import { Route, Routes } from "react-router-dom";
+//import './app.css';
 
 export default function App() {
   function navPage(direction, topicUrl) {
@@ -15,12 +15,12 @@ export default function App() {
         }
 
         if (topicUrl.endsWith(topic.path)) {
-          if (direction === 'next') {
+          if (direction === "next") {
             next = true;
           } else if (prev) {
             return `/page/${prev.path}`;
           }
-        } else if (direction === 'prev') {
+        } else if (direction === "prev") {
           prev = topic;
         }
       }
@@ -43,9 +43,9 @@ export default function App() {
         <h1>CS 260 - Web Programming</h1>
       </nav>
       <Routes>
-        <Route path='/' element={<TopicList topics={topics} />} exact />
-        <Route path='/page/*' element={<Page onNav={navPage} />} />
-        <Route path='*' element={<NotFound />} />
+        <Route path="/" element={<TopicList topics={topics} />} exact />
+        <Route path="/page/*" element={<Page onNav={navPage} />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
@@ -56,11 +56,12 @@ function NotFound() {
 }
 
 async function loadTopics() {
-  const url = 'https://github.com/webprogramming260/.github/blob/main/profile/instructionTopics.md';
+  const url =
+    "https://github.com/webprogramming260/.github/blob/main/profile/instructionTopics.md";
 
   const rawUrl = url.replace(
-    'github.com/webprogramming260/.github/blob',
-    'raw.githubusercontent.com/webprogramming260/.github'
+    "github.com/webprogramming260/.github/blob",
+    "raw.githubusercontent.com/webprogramming260/.github"
   );
 
   const r = await fetch(rawUrl);
@@ -72,8 +73,13 @@ async function loadTopics() {
     const topics = [];
     sections.push({ title: blockMatch[1], topics: topics });
     for (let lineMatch of blockMatch[0].matchAll(lineRegEx)) {
-      const path = lineMatch[3].replaceAll('.', '_');
-      topics.push({ assignment: !!lineMatch[1], title: lineMatch[2], path: path, due: parseDate(lineMatch[5]) });
+      const path = lineMatch[3].replaceAll(".", "_");
+      topics.push({
+        assignment: !!lineMatch[1],
+        title: lineMatch[2],
+        path: path,
+        due: parseDate(lineMatch[5]),
+      });
     }
   }
   return sections;
@@ -81,7 +87,7 @@ async function loadTopics() {
 
 function parseDate(textDate) {
   if (textDate) {
-    const parts = textDate.split('/');
+    const parts = textDate.split("/");
     if (parts.length === 2) {
       let date = new Date();
       date.setMonth(parts[0] - 1);

@@ -34,8 +34,8 @@ Using [Markdown-it](https://github.com/markdown-it/markdown-it) and [highlight.j
 Added components for the application. Vite supports this directly and so I just had to start writing JSX and import React.
 
 ```jsx
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 export default function App() {
   const [topics, setTopics] = React.useState([]);
 
@@ -49,9 +49,9 @@ export default function App() {
     <>
       <p>CS 260</p>
       <Routes>
-        <Route path='/' element={<TopicList topics={topics} />} exact />
-        <Route path='/page/*' element={<Page onNav={navPage} />} />
-        <Route path='*' element={<NotFound />} />
+        <Route path="/" element={<TopicList topics={topics} />} exact />
+        <Route path="/page/*" element={<Page onNav={navPage} />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
@@ -67,12 +67,12 @@ export default function TopicList({ topics }) {
   function getDue(due: Date) {
     if (due) {
       if (Date.now() > due.getTime()) {
-        <span className='due'>☑ {due.getUTCDate()}</span>;
+        <span className="due">☑ {due.getUTCDate()}</span>;
       } else {
-        <span className='due'>xx☑ {due.getUTCDate()}</span>;
+        <span className="due">xx☑ {due.getUTCDate()}</span>;
       }
     }
-    return '';
+    return "";
   }
   const o: JSX.Element[] = [];
   topics.forEach((section) => {
@@ -80,7 +80,8 @@ export default function TopicList({ topics }) {
     section.topics.forEach((topic) => {
       ol.push(
         <li key={topic.title}>
-          <NavLink to={`/page/${topic.path}`}>{topic.title}</NavLink> {getDue(topic.due)}
+          <NavLink to={`/page/${topic.path}`}>{topic.title}</NavLink>{" "}
+          {getDue(topic.due)}
         </li>
       );
     });
@@ -98,3 +99,11 @@ export default function TopicList({ topics }) {
   return <div>{o}</div>;
 }
 ```
+
+## Converting to Tailwind
+
+- Installled Tailwind CSS VSCode extension
+- To get started we can just use the CDN to bring tailwind in.
+  ```js
+  <script src="https://cdn.tailwindcss.com"></script>
+  ```
