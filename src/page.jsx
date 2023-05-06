@@ -14,7 +14,7 @@ export default function Page({ onNav }) {
     "https://github.com/webprogramming260/.github/blob/main/profile/" +
     wildcard;
   const gitHubUrl = url.replace("_", ".");
-  const [h, setH] = React.useState("Loading...");
+  const [htmlDoc, setHtmlDoc] = React.useState("Loading...");
 
   React.useEffect(() => {
     let rawUrl = gitHubUrl.replace(
@@ -29,13 +29,13 @@ export default function Page({ onNav }) {
         const reg = /\!\[(.*)\]\((.*)\)/g;
         const up = body.replaceAll(reg, `![$1](${rootUrl}$2)`);
 
-        let ht = md.render(up);
-        ht = ht.replaceAll(
+        let renderedHtml = md.render(up);
+        renderedHtml = renderedHtml.replaceAll(
           "Canvas",
           '<a href="https://byu.instructure.com/courses/21349/assignments">Canvas</a>'
         );
 
-        setH(ht);
+        setHtmlDoc(renderedHtml);
       });
   }, [location]);
 
@@ -45,7 +45,7 @@ export default function Page({ onNav }) {
       <div
         id="md"
         className="markdown-body"
-        dangerouslySetInnerHTML={{ __html: h }}
+        dangerouslySetInnerHTML={{ __html: htmlDoc }}
       ></div>
       <PageNav onNav={onNav} url={url} gitHubUrl={gitHubUrl}></PageNav>
     </>

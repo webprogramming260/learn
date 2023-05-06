@@ -27,7 +27,32 @@ Vite uses ESBuild to do all the bundling. ESBuild is built with Go and boosts sp
 
 ## Implemented Markdown rendering
 
-Using [Markdown-it](https://github.com/markdown-it/markdown-it) and [highlight.js](https://highlightjs.org/) we can render the GitHub pages.
+Using [Markdown-it](https://github.com/markdown-it/markdown-it) and [highlight.js](https://highlightjs.org/) we can render the GitHub pages. I had to import each of these packages and then add code to process the markdown into HTML and highlight the code syntax.
+
+```js
+fetch(rawUrl)
+  .then((r) => r.text())
+  .then((body) => {
+    let renderedHtml = md.render(body);
+    setHtmlDoc(renderedHtml);
+  });
+
+const md = MarkdownIt({
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return (
+          "<pre>" +
+          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+          `</pre>`
+        );
+      } catch (__) {}
+    }
+
+    return "";
+  },
+});
+```
 
 ## Converted to React
 
@@ -134,3 +159,7 @@ export default function TopicList({ topics }) {
   ```
 - Reference the `index.css` from `index.html`
 - When you run `npm run dev` vite will automatically compile the tailwind css and display the result.
+
+## Font
+
+I changed the base font for the
