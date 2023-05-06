@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, useParams, useLocation } from "react-router-dom";
 
 import MarkdownIt from "markdown-it";
-import hljs from "highlight.js";
+import hljs from "highlight.js"; // Formats the code blocks
 import "highlight.js/styles/github.css";
 import "./page.css";
 import "./github-markdown.css";
@@ -30,7 +30,6 @@ export default function Page({ onNav }) {
         const up = body.replaceAll(reg, `![$1](${rootUrl}$2)`);
 
         let ht = md.render(up);
-        ht = ht.replaceAll("☑", '<span class="assignment">☑</span>');
         ht = ht.replaceAll(
           "Canvas",
           '<a href="https://byu.instructure.com/courses/21349/assignments">Canvas</a>'
@@ -55,7 +54,7 @@ export default function Page({ onNav }) {
 
 function PageNav({ onNav, url, gitHubUrl }) {
   return (
-    <div className="topic-nav">
+    <div className="m-0 text-gray-200 bg-gray-800 justify-between flex px-6 py-3 text-lg">
       <NavLink to={onNav("prev", url)}>Prev</NavLink>
       <NavLink to="/">Topics</NavLink>
       <a href={gitHubUrl}>GitHub</a>

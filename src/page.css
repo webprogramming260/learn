@@ -11,19 +11,3 @@
     padding: 15px;
   }
 }
-
-.topic-nav {
-  margin: 0;
-  display: flex;
-  justify-content: space-between;
-  background-color: #99999d45;
-}
-
-.topic-nav a {
-  padding: 0.5em 1em;
-}
-
-.assignment {
-  color: #66c7ab;
-  font-weight: 900;
-}

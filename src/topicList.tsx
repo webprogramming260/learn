@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-//import './topicList.css';
+import './topicList.css';
 
 export default function TopicList({ topics }) {
   function getDue(dueDate: Date) {
@@ -17,20 +17,20 @@ export default function TopicList({ topics }) {
     section.topics.forEach((topic) => {
       ol.push(
         <li key={topic.title}>
-          <NavLink to={`/page/${topic.path}`}>{topic.title}</NavLink> {getDue(topic.due)}
+          <NavLink className="px-4" to={`/page/${topic.path}`}>{topic.title}</NavLink> {getDue(topic.due)}
         </li>
       );
     });
 
     if (ol.length > 0) {
       o.push(
-        <div key={section.title} className="container bg-gray-100 mx-auto">
-          <h3 className="text-2xl font-bold text-gray-800 p-2 whitespace-nowrap">{section.title}</h3>
+        <div key={section.title} className="container p-4 bg-gray-100 mx-auto">
+          <h2>{section.title}</h2>
           <ul>{ol}</ul>
         </div>
       );
     }
   });
 
-  return <div className="bg-gray-800">{o}</div>;
+  return <div className="bg-gray-200">{o}</div>;
 }

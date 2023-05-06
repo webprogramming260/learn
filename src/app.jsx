@@ -2,7 +2,6 @@ import React from "react";
 import TopicList from "./topicList";
 import Page from "./page";
 import { Route, Routes } from "react-router-dom";
-//import './app.css';
 
 export default function App() {
   function navPage(direction, topicUrl) {

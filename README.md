@@ -102,8 +102,35 @@ export default function TopicList({ topics }) {
 
 ## Converting to Tailwind
 
-- Installled Tailwind CSS VSCode extension
-- To get started we can just use the CDN to bring tailwind in.
+- [PluralSight course](https://app.pluralsight.com/library/courses/tailwind-css-3-fundamentals/table-of-contents)
+- Installed Tailwind CSS VSCode extension
+- To get started we can just use the CDN to bring tailwind in. Modify index.html to include:
   ```js
   <script src="https://cdn.tailwindcss.com"></script>
   ```
+- Added some simple classes to style things.
+- Installed [tailwind](https://tailwindcss.com/docs/guides/vite) instead of using the CDN
+  ```sh
+  npm install -D tailwindcss postcss autoprefixer
+  npx tailwindcss init -p
+  ```
+  All this does is create a `tailwind.config.js`.
+- Modify the `tailwind.config.js` to tell it where to find files we want it to process.
+  ```js
+  /** @type {import('tailwindcss').Config} */
+  export default {
+    content: ["./src/*.{html,tsx,jsx}", "./index.html"],
+    theme: {
+      extend: {},
+    },
+    plugins: [],
+  };
+  ```
+- Add the directives that tell tailwind where to build the css in an `index.css` file
+  ```css
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  ```
+- Reference the `index.css` from `index.html`
+- When you run `npm run dev` vite will automatically compile the tailwind css and display the result.
