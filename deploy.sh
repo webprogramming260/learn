@@ -21,12 +21,16 @@ printf "\n----> Building distribution.\n"
 npm install
 npm run build
 
+# Step 2
 printf "\n----> Clear out the previous distribution on the target.\n"
 ssh -i "$key" ubuntu@$hostname << ENDSSH
 rm -rf public_html/instruction
 mkdir -p public_html/instruction
 ENDSSH
 
-# Step 2
+# Step 3
 printf "\n----> Copy the distribution package to the target.\n"
 scp -r -i "$key" dist/* ubuntu@$hostname:public_html/instruction
+
+# Step 4
+rm -rf dist
