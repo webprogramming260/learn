@@ -17,6 +17,10 @@ fi
 printf "\n----> Deploying files to $hostname with $key\n"
 
 # Step 1
+printf "\n----> Building distribution.\n"
+npm install
+npm run build
+
 printf "\n----> Clear out the previous distribution on the target.\n"
 ssh -i "$key" ubuntu@$hostname << ENDSSH
 rm -rf public_html/instruction
@@ -25,4 +29,4 @@ ENDSSH
 
 # Step 2
 printf "\n----> Copy the distribution package to the target.\n"
-scp -r -i "$key" * ubuntu@$hostname:public_html/instruction
+scp -r -i "$key" dist/* ubuntu@$hostname:public_html/instruction
