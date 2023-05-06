@@ -24,8 +24,8 @@ export default function TopicList({ topics }) {
 
     if (ol.length > 0) {
       o.push(
-        <div key={section.title} className="container m-5 p-4 bg-stone-200 rounded-xl text-stone-100 dark:bg-stone-800 mx-auto">
-          <h2 className="font-bold text-2xl p-3">{section.title}</h2>
+        <div key={section.title} className="container m-5 p-4 bg-stone-200 rounded-xl dark:bg-stone-800 mx-auto">
+          <h2 className="font-bold text-2xl p-3 text-stone-900 dark:text-teal-100">{section.title}</h2>
           <ul>{ol}</ul>
         </div>
       );
