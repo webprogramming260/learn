@@ -38,14 +38,16 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <nav>
-        <h1>CS 260 - Web Programming</h1>
-      </nav>
-      <Routes>
-        <Route path="/" element={<TopicList topics={topics} />} exact />
-        <Route path="/page/*" element={<Page onNav={navPage} />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <div className="text-gray-950 dark:text-gray-200 bg-gray-100 dark:bg-gray-950">
+        <h1 className="font-bold text-2xl p-4 text-gray-800 dark:text-gray-200 border-b-4 border-gray-900">
+          CS 260 - Web Programming
+        </h1>
+        <Routes>
+          <Route path="/" element={<TopicList topics={topics} />} exact />
+          <Route path="/page/*" element={<Page onNav={navPage} />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }

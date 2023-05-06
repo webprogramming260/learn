@@ -24,13 +24,13 @@ export default function TopicList({ topics }) {
 
     if (ol.length > 0) {
       o.push(
-        <div key={section.title} className="container p-4 bg-gray-100 mx-auto">
-          <h2>{section.title}</h2>
+        <div key={section.title} className="container m-5 p-4 bg-gray-200 rounded-xl dark:bg-gray-900 mx-auto">
+          <h2 className="font-bold text-2xl p-3">{section.title}</h2>
           <ul>{ol}</ul>
         </div>
       );
     }
   });
 
-  return <div className="bg-gray-200">{o}</div>;
+  return <div>{o}</div>;
 }

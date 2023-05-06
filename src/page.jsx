@@ -42,11 +42,13 @@ export default function Page({ onNav }) {
   return (
     <>
       <PageNav onNav={onNav} url={url} gitHubUrl={gitHubUrl}></PageNav>
-      <div
-        id="md"
-        className="markdown-body"
-        dangerouslySetInnerHTML={{ __html: htmlDoc }}
-      ></div>
+      <div className="container mx-auto">
+        <div
+          id="md"
+          className="markdown-body"
+          dangerouslySetInnerHTML={{ __html: htmlDoc }}
+        ></div>
+      </div>
       <PageNav onNav={onNav} url={url} gitHubUrl={gitHubUrl}></PageNav>
     </>
   );
