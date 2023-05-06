@@ -38,10 +38,10 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="text-stone-950 dark:text-stone-300 bg-stone-100 dark:bg-stone-900 flex flex-col">
+      <div className="text-stone-950 dark:text-stone-300 dark:bg-stone-900 flex flex-col">
         <h1 className="font-bold text-2xl p-4 text-stone-800 dark:text-stone-300 border-b-4 border-stone-900 dark:border-stone-400 flex flex-row align-middle justify-start">
           <svg
-            className="fill-slate-600 h-8 mx-3 inline"
+            className="fill-yellow-200 dark:fill-cyan-900 h-8 mx-3 inline"
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"

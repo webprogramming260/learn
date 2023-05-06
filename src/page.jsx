@@ -14,7 +14,9 @@ export default function Page({ onNav }) {
     "https://github.com/webprogramming260/.github/blob/main/profile/" +
     wildcard;
   const gitHubUrl = url.replace("_", ".");
-  const [htmlDoc, setHtmlDoc] = React.useState("Loading...");
+  const [htmlDoc, setHtmlDoc] = React.useState(
+    "<div style='height:120vh;'></div>"
+  );
 
   React.useEffect(() => {
     let rawUrl = gitHubUrl.replace(
@@ -42,7 +44,7 @@ export default function Page({ onNav }) {
   return (
     <>
       <PageNav onNav={onNav} url={url} gitHubUrl={gitHubUrl}></PageNav>
-      <div className="container mx-auto">
+      <div className="flex align-middle justify-center">
         <div
           id="md"
           className="markdown-body"
