@@ -1,7 +1,7 @@
 import React from "react";
 import TopicList from "./topicList";
 import Page from "./page";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 export default function App() {
   function navPage(direction, topicUrl) {
@@ -37,7 +37,7 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    <BrowserRouter>
       <nav>
         <h1>CS 260 - Web Programming</h1>
       </nav>
@@ -46,7 +46,7 @@ export default function App() {
         <Route path="/page/*" element={<Page onNav={navPage} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </BrowserRouter>
   );
 }
 
