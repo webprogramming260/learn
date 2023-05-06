@@ -2,6 +2,7 @@ import React from "react";
 import TopicList from "./topicList";
 import Page from "./page";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ScrollToTop from "./scrollToTop";
 
 export default function App() {
   function navPage(direction, topicUrl) {
@@ -38,6 +39,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="text-stone-950 dark:text-stone-300 dark:bg-stone-900 flex flex-col">
         <h1 className="font-bold text-2xl p-4 text-stone-800 dark:text-stone-300 border-b-4 border-stone-900 dark:border-stone-400 flex flex-row align-middle justify-start">
           <svg
