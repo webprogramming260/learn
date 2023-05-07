@@ -6,6 +6,12 @@
   padding: 45px;
 }
 
+.hljs-string,
+.hljs-subst,
+.hljs-regexp {
+  color: rgb(133 135 226);
+}
+
 @media (max-width: 767px) {
   .markdown-body {
     padding: 15px;
