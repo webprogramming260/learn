@@ -22,7 +22,7 @@ function TopicSection({section}) {
   });
 
   if (ol.length > 0) {
-    const animate = showTopics ? '' : 'hover:animate-wiggle';
+    const animate = showTopics ? '' : 'hover:animate-pulse';
     return (
       <div key={section.title} className='container m-5 p-4 bg-stone-200 rounded-xl dark:bg-stone-800 mx-auto'>
         <h2
