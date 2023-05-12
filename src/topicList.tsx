@@ -3,9 +3,9 @@ import {NavLink} from 'react-router-dom';
 import './topicList.css';
 
 export default function TopicList({topics}) {
-  const topicSections: Element[] = [];
+  const topicSections: JSX.Element[] = [];
   topics.forEach((section) => {
-    const topicSection = <TopicSection section={section} />;
+    const topicSection = <TopicSection key={section.title} section={section} />;
     topicSections.push(topicSection);
   });
 
@@ -13,25 +13,30 @@ export default function TopicList({topics}) {
 }
 
 function TopicSection({section}) {
-  const [showTopics, setShowTopics] = React.useState(false);
+  const [showTopic, setShowTopic] = React.useState(topicExists(section.title));
 
-  const ol: Element[] = [];
+  const ol: JSX.Element[] = [];
 
   section.topics.forEach((topic) => {
-    ol.push(<Topic topic={topic} />);
+    ol.push(<Topic key={topic.title} topic={topic} />);
   });
 
+  function toggleTopic() {
+    storeTopicState(section.title, !showTopic);
+    setShowTopic(!showTopic);
+  }
+
   if (ol.length > 0) {
-    const animate = showTopics ? '' : 'hover:animate-pulse';
+    const animate = showTopic ? '' : 'hover:underline hover:animate-pulse';
     return (
       <div key={section.title} className='container m-5 p-4 bg-stone-200 rounded-xl dark:bg-stone-800 mx-auto'>
         <h2
           className={animate + ' cursor-pointer font-bold text-2xl p-3 text-stone-900 dark:text-teal-100'}
-          onClick={() => setShowTopics(!showTopics)}
+          onClick={toggleTopic}
         >
           {section.title}
         </h2>
-        {showTopics && (
+        {showTopic && (
           <div className='block'>
             <ul>{ol}</ul>
           </div>
@@ -61,4 +66,33 @@ function Topic({topic}) {
       {getDue(topic.due)}
     </li>
   );
+}
+
+function topicExists(title: string): boolean {
+  let topicFound = false;
+  const {openTopics: value}: Storage = window.localStorage;
+  if (value) {
+    const openTopics = JSON.parse(value);
+    topicFound = openTopics.includes(title);
+  }
+  return topicFound;
+}
+
+function storeTopicState(title: string, showTopic: boolean) {
+  let topics: string[] = [];
+  const {openTopics: value}: Storage = window.localStorage;
+  if (value) {
+    topics = JSON.parse(value);
+  }
+
+  if (showTopic) {
+    if (!topics.includes(title)) {
+      topics.push(title);
+    }
+  } else {
+    if (topics.includes(title)) {
+      topics.splice(topics.indexOf(title), 1);
+    }
+  }
+  window.localStorage.setItem('openTopics', JSON.stringify(topics));
 }
