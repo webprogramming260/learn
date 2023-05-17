@@ -2,6 +2,12 @@
 
 The project reads GitHub markdown files and creates an app specific view of their content for easy navigation.
 
+You can view the application in action at [learn.cs260.click](https://learn.cs260.click).
+
+# Steps for creation
+
+The following describes the process used to create this application.
+
 ## vite-vanilla
 
 Created the basic project using vite-vanilla
@@ -41,15 +47,11 @@ const md = MarkdownIt({
   highlight: function (str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
-        return (
-          "<pre>" +
-          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-          `</pre>`
-        );
+        return '<pre>' + hljs.highlight(str, {language: lang, ignoreIllegals: true}).value + `</pre>`;
       } catch (__) {}
     }
 
-    return "";
+    return '';
   },
 });
 ```
@@ -59,8 +61,8 @@ const md = MarkdownIt({
 Added components for the application. Vite supports this directly and so I just had to start writing JSX and import React.
 
 ```jsx
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React from 'react';
+import {Route, Routes} from 'react-router-dom';
 export default function App() {
   const [topics, setTopics] = React.useState([]);
 
@@ -74,9 +76,9 @@ export default function App() {
     <>
       <p>CS 260</p>
       <Routes>
-        <Route path="/" element={<TopicList topics={topics} />} exact />
-        <Route path="/page/*" element={<Page onNav={navPage} />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path='/' element={<TopicList topics={topics} />} exact />
+        <Route path='/page/*' element={<Page onNav={navPage} />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </>
   );
@@ -88,16 +90,16 @@ export default function App() {
 Just rename the file to `tsx` and start using TypeScript.
 
 ```tsx
-export default function TopicList({ topics }) {
+export default function TopicList({topics}) {
   function getDue(due: Date) {
     if (due) {
       if (Date.now() > due.getTime()) {
-        <span className="due">☑ {due.getUTCDate()}</span>;
+        <span className='due'>☑ {due.getUTCDate()}</span>;
       } else {
-        <span className="due">xx☑ {due.getUTCDate()}</span>;
+        <span className='due'>xx☑ {due.getUTCDate()}</span>;
       }
     }
-    return "";
+    return '';
   }
   const o: JSX.Element[] = [];
   topics.forEach((section) => {
@@ -105,8 +107,7 @@ export default function TopicList({ topics }) {
     section.topics.forEach((topic) => {
       ol.push(
         <li key={topic.title}>
-          <NavLink to={`/page/${topic.path}`}>{topic.title}</NavLink>{" "}
-          {getDue(topic.due)}
+          <NavLink to={`/page/${topic.path}`}>{topic.title}</NavLink> {getDue(topic.due)}
         </li>
       );
     });
@@ -131,7 +132,7 @@ export default function TopicList({ topics }) {
 - Installed Tailwind CSS VSCode extension
 - To get started we can just use the CDN to bring tailwind in. Modify index.html to include:
   ```js
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src='https://cdn.tailwindcss.com'></script>
   ```
 - Added some simple classes to style things.
 - Installed [tailwind](https://tailwindcss.com/docs/guides/vite) instead of using the CDN
@@ -144,7 +145,7 @@ export default function TopicList({ topics }) {
   ```js
   /** @type {import('tailwindcss').Config} */
   export default {
-    content: ["./src/*.{html,tsx,jsx}", "./index.html"],
+    content: ['./src/*.{html,tsx,jsx}', './index.html'],
     theme: {
       extend: {},
     },
@@ -162,4 +163,42 @@ export default function TopicList({ topics }) {
 
 ## Font
 
-I changed the base font for the
+I changed the base font for the application to Montserrat using the following
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: Montserrat, monospace;
+  }
+}
+```
+
+## Dark mode support
+
+I added the ability to use the operating system setting for dark mode. At the highest level I added an application wide toggle using the media selector.
+
+```css
+@layer base {
+  body {
+    background-color: white;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: black;
+    }
+  }
+}
+```
+
+Then specific elements are controlled with Tailwind classes.
+
+```html
+<div className="text-stone-950 dark:text-stone-300 dark:bg-stone-900 flex flex-col"></div>
+```
