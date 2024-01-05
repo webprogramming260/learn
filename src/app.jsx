@@ -60,10 +60,7 @@ export default function App() {
             </svg>
             CS 260 - Web Programming
           </h1>
-          <NavLink
-            to='/page/schedule/schedule_md'
-            className='text-2xl p-4 text-stone-800 text-blue-400 hover:underline'
-          >
+          <NavLink to='/page/schedule/schedule_md' className='text-2xl p-4 text-blue-400 hover:underline'>
             Schedule
           </NavLink>
         </header>
