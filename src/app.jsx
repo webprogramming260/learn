@@ -39,9 +39,8 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <ScrollToTop />
-      <div className='text-stone-950 dark:text-stone-300 dark:bg-stone-900 flex flex-col'>
-        <header className='border-b-4 border-stone-900 dark:border-stone-400 flex flex-row align-middle justify-between'>
+      <div className='h-screen text-stone-950 dark:text-stone-300 dark:bg-stone-900 flex flex-col'>
+        <header className='h-16 border-b-4 border-stone-900 dark:border-stone-400 flex flex-row align-middle justify-between'>
           <h1 className='font-bold text-2xl p-4 text-stone-800 dark:text-stone-300'>
             <svg
               className='fill-yellow-200 dark:fill-cyan-900 h-8 mx-3 inline'
@@ -60,15 +59,21 @@ export default function App() {
             </svg>
             CS 260 - Web Programming
           </h1>
-          <NavLink to='/page/schedule/schedule_md' className='text-2xl p-4 text-blue-400 hover:underline'>
+          <NavLink
+            to='/page/schedule/schedule_md'
+            className='text-2xl p-4 text-blue-400 hover:underline'
+          >
             Schedule
           </NavLink>
         </header>
-        <Routes>
-          <Route path='/' element={<TopicList topics={topics} />} exact />
-          <Route path='/page/*' element={<Page onNav={navPage} />} />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
+        <main className='h-auto overflow-scroll'>
+          <ScrollToTop />
+          <Routes>
+            <Route path='/' element={<TopicList topics={topics} />} exact />
+            <Route path='/page/*' element={<Page onNav={navPage} />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </main>
       </div>
     </BrowserRouter>
   );
@@ -79,7 +84,8 @@ function NotFound() {
 }
 
 async function loadTopics() {
-  const url = 'https://github.com/webprogramming260/.github/blob/main/profile/instructionTopics.md';
+  const url =
+    'https://github.com/webprogramming260/.github/blob/main/profile/instructionTopics.md';
 
   const rawUrl = url.replace(
     'github.com/webprogramming260/.github/blob',
