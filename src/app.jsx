@@ -1,7 +1,7 @@
 import React from 'react';
 import TopicList from './topicList';
 import Page from './page';
-import { BrowserRouter, Route, Routes, NavLink, useLocation } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, NavLink, useNavigate } from 'react-router-dom';
 import ScrollToTop from './scrollToTop';
 
 export default function App() {
@@ -21,8 +21,9 @@ export default function App() {
     return newPage;
   }
 
-  function gotoPage(path) {
-
+  function navigationHandler(path) {
+    //    setCourse({ ...course, currentPage: path });
+  }
 
   React.useEffect(() => {
     (async () => {
@@ -40,7 +41,7 @@ export default function App() {
               Schedule
             </NavLink>
           </div>
-          <PageNav onNav={gotoPage} course={course}></PageNav>
+          <PageNav onNav={navigationHandler} course={course}></PageNav>
         </header>
         <main className='h-auto overflow-scroll'>
           <ScrollToTop />
@@ -55,32 +56,37 @@ export default function App() {
   );
 }
 
-function PageNav({ gotoPage, course }) {
-  function gotoPage(direction) {
-    const newPage = getPage(direction);
+function PageNav({ onNav, course }) {
+  const navigate = useNavigate();
 
-
+  function handleNavClick(direction) {
+    let newPage = getPage(direction);
+    console.log(newPage);
+    //onNav(newPage);
+    //navigate(newPage);
+    window.location.href = newPage;
   }
 
   function getPage(direction) {
-    if (course.currentPage === '/') {
+    const currentPage = window.location.pathname;
+    if (currentPage === '/') {
       if (direction === 'next') {
         return course.sections[0].topics[0].path;
       }
       const lastSection = course.sections[course.sections.length - 1];
-      const lastTopic = course.sections[lastSection].topics[lastSection.topics.length - 1];
+      const lastTopic = lastSection.topics[lastSection.topics.length - 1];
       return lastTopic.path;
     }
 
     let prev;
     let next = false;
-    for (const section of topics) {
+    for (const section of course.sections) {
       for (const topic of section.topics) {
         if (next) {
           return topic.path;
         }
 
-        if (course.currentPage.endsWith(topic.path)) {
+        if (currentPage === topic.path) {
           if (direction === 'next') {
             next = true;
           } else if (prev) {
@@ -92,15 +98,15 @@ function PageNav({ gotoPage, course }) {
       }
     }
 
-    return `/`;
+    return '/';
   }
 
   return (
     <div className='m-0 text-gray-200 bg-gray-800 justify-between flex px-6 py-3 text-lg'>
-      <NavLink onClick={() => gotoPage('prev')}>Prev</NavLink>
+      <NavLink onClick={() => handleNavClick('prev')}>Prev</NavLink>
       <NavLink to='/'>Topics</NavLink>
       <a href={course.gitHubUrl}>GitHub</a>
-      <NavLink onClick={() => gotoPage('next')}>Next</NavLink>
+      <NavLink onClick={() => handleNavClick('next')}>Next</NavLink>
     </div>
   );
 }
@@ -124,19 +130,21 @@ async function loadCourse() {
   const sections = [];
   for (let blockMatch of body.matchAll(blockRegEx)) {
     const topics = [];
-    sections.push({ title: blockMatch[1], topics: topics });
     for (let lineMatch of blockMatch[0].matchAll(lineRegEx)) {
       const path = lineMatch[3].replaceAll('.', '_');
       topics.push({
         assignment: !!lineMatch[1],
         title: lineMatch[2],
-        path: path,
+        path: `/page/${path}`,
         due: parseDate(lineMatch[5]),
       });
     }
+
+    if (topics.length > 0) {
+      sections.push({ title: blockMatch[1], topics: topics });
+    }
   }
   return {
-    currentPage: '/',
     gitHubUrl: 'https://github.com',
     sections: sections,
   };
