@@ -4,7 +4,7 @@ import './topicList.css';
 
 export default function TopicList({ course, onPathChange }) {
   onPathChange?.('/', course.gitHubRoot);
-  const topicSections: JSX.Element[] = [];
+  const topicSections = [];
   course.sections.forEach((section) => {
     const topicSection = <TopicSection key={section.title} section={section} />;
     topicSections.push(topicSection);
@@ -16,7 +16,7 @@ export default function TopicList({ course, onPathChange }) {
 function TopicSection({ section }) {
   const [showTopic, setShowTopic] = React.useState(topicExists(section.title));
 
-  const ol: JSX.Element[] = [];
+  const ol = [];
 
   section.topics.forEach((topic) => {
     ol.push(<Topic key={topic.title} topic={topic} />);
@@ -50,7 +50,7 @@ function TopicSection({ section }) {
 }
 
 function Topic({ topic }) {
-  function getDue(dueDate: Date) {
+  function getDue(dueDate) {
     if (dueDate) {
       const now = new Date();
       const due = now.getTime() < dueDate.getTime();
@@ -69,9 +69,9 @@ function Topic({ topic }) {
   );
 }
 
-function topicExists(title: string): boolean {
+function topicExists(title) {
   let topicFound = false;
-  const { openTopics: value }: Storage = window.localStorage;
+  const { openTopics: value } = window.localStorage;
   if (value) {
     const openTopics = JSON.parse(value);
     topicFound = openTopics.includes(title);
@@ -79,9 +79,9 @@ function topicExists(title: string): boolean {
   return topicFound;
 }
 
-function storeTopicState(title: string, showTopic: boolean) {
-  let topics: string[] = [];
-  const { openTopics: value }: Storage = window.localStorage;
+function storeTopicState(title, showTopic) {
+  let topics = [];
+  const { openTopics: value } = window.localStorage;
   if (value) {
     topics = JSON.parse(value);
   }
