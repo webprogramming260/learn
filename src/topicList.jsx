@@ -3,12 +3,20 @@ import { NavLink } from 'react-router-dom';
 import './topicList.css';
 
 export default function TopicList({ course, onPathChange }) {
-  onPathChange?.('/', course.gitHubRoot);
-  const topicSections = [];
-  course.sections.forEach((section) => {
-    const topicSection = <TopicSection key={section.title} section={section} />;
-    topicSections.push(topicSection);
-  });
+  const [topicSections, setTopicSections] = React.useState([]);
+
+  React.useEffect(() => {
+    (async () => {
+      console.log('topicList ' + onPathChange);
+      onPathChange?.('/', course.gitHubRoot);
+      const ts = [];
+      course.sections.forEach((section) => {
+        const topicSection = <TopicSection key={section.title} section={section} />;
+        ts.push(topicSection);
+      });
+      setTopicSections(ts);
+    })();
+  }, [course]);
 
   return <div>{topicSections}</div>;
 }
