@@ -1,35 +1,27 @@
 import React from 'react';
 import TopicList from './topicList';
 import Page from './page';
-import { BrowserRouter, Route, Routes, NavLink, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, NavLink, Navigate } from 'react-router-dom';
 import ScrollToTop from './scrollToTop';
 
+const defaultCourse = {
+  gitHubRoot: 'https://github.com/webprogramming260/.github/blob/main/profile/',
+  sections: [],
+};
+
 export default function App() {
-  const [course, setCourse] = React.useState({ sections: [] });
-
-  function navPage(direction, topicUrl) {
-    const newPage = getPage(direction, topicUrl);
-
-    // const location = useLocation();
-    // const wildcard = 'x'; //useParams()['*'];
-    // const gitHubRoot = 'https://github.com/webprogramming260/.github/blob/main/profile/';
-    // const url = gitHubRoot + wildcard;
-    // const gitHubUrl = url.replace('_', '.');
-
-    // setCurrentPage(newPage);
-
-    return newPage;
-  }
-
-  function navigationHandler(path) {
-    //    setCourse({ ...course, currentPage: path });
-  }
+  const [course, setCourse] = React.useState(defaultCourse);
+  const [gitHubUrl, setGitHubUrl] = React.useState('');
 
   React.useEffect(() => {
     (async () => {
       setCourse(await loadCourse());
     })();
   }, []);
+
+  function pathChange(url, gitHubUrl) {
+    setGitHubUrl(gitHubUrl);
+  }
 
   return (
     <BrowserRouter>
@@ -41,14 +33,14 @@ export default function App() {
               Schedule
             </NavLink>
           </div>
-          <PageNav onNav={navigationHandler} course={course}></PageNav>
+          <PageNav course={course} gitHubUrl={gitHubUrl}></PageNav>
         </header>
         <main className='h-auto overflow-scroll'>
           <ScrollToTop />
           <Routes>
-            <Route path='/' element={<TopicList topics={course.sections} />} exact />
-            <Route path='/page/*' element={<Page />} />
-            <Route path='*' element={<NotFound />} />
+            <Route path='/' element={<TopicList course={course} onPathChange={pathChange} />} exact />
+            <Route path='/page/*' element={<Page course={course} onPathChange={pathChange} />} />
+            <Route path='*' element={<Navigate to='/' />} />
           </Routes>
         </main>
       </div>
@@ -56,63 +48,50 @@ export default function App() {
   );
 }
 
-function PageNav({ onNav, course }) {
-  const navigate = useNavigate();
-
-  function handleNavClick(direction) {
-    let newPage = getPage(direction);
-    console.log(newPage);
-    //onNav(newPage);
-    //navigate(newPage);
-    window.location.href = newPage;
-  }
-
+function PageNav({ course, gitHubUrl }) {
   function getPage(direction) {
-    const currentPage = window.location.pathname;
-    if (currentPage === '/') {
-      if (direction === 'next') {
-        return course.sections[0].topics[0].path;
-      }
-      const lastSection = course.sections[course.sections.length - 1];
-      const lastTopic = lastSection.topics[lastSection.topics.length - 1];
-      return lastTopic.path;
-    }
-
-    let prev;
-    let next = false;
-    for (const section of course.sections) {
-      for (const topic of section.topics) {
-        if (next) {
-          return topic.path;
+    if (course.sections.length > 0) {
+      const currentPage = window.location.pathname;
+      if (currentPage === '/') {
+        if (direction === 'next') {
+          return course.sections[0].topics[0].path;
         }
+        const lastSection = course.sections[course.sections.length - 1];
+        const lastTopic = lastSection.topics[lastSection.topics.length - 1];
+        return lastTopic.path;
+      }
 
-        if (currentPage === topic.path) {
-          if (direction === 'next') {
-            next = true;
-          } else if (prev) {
-            return prev.path;
+      let prev;
+      let next = false;
+      for (const section of course.sections) {
+        for (const topic of section.topics) {
+          if (next) {
+            return topic.path;
           }
-        } else if (direction === 'prev') {
-          prev = topic;
+
+          if (currentPage === topic.path) {
+            if (direction === 'next') {
+              next = true;
+            } else if (prev) {
+              return prev.path;
+            }
+          } else if (direction === 'prev') {
+            prev = topic;
+          }
         }
       }
     }
-
     return '/';
   }
 
   return (
     <div className='m-0 text-gray-200 bg-gray-800 justify-between flex px-6 py-3 text-lg'>
-      <NavLink onClick={() => handleNavClick('prev')}>Prev</NavLink>
+      <NavLink to={getPage('prev')}>Prev</NavLink>
       <NavLink to='/'>Topics</NavLink>
-      <a href={course.gitHubUrl}>GitHub</a>
-      <NavLink onClick={() => handleNavClick('next')}>Next</NavLink>
+      <a href={gitHubUrl}>GitHub</a>
+      <NavLink to={getPage('next')}>Next</NavLink>
     </div>
   );
-}
-
-function NotFound() {
-  return <div>Not found</div>;
 }
 
 async function loadCourse() {
@@ -144,10 +123,7 @@ async function loadCourse() {
       sections.push({ title: blockMatch[1], topics: topics });
     }
   }
-  return {
-    gitHubUrl: 'https://github.com',
-    sections: sections,
-  };
+  return { ...defaultCourse, sections: sections };
 }
 
 function parseDate(textDate) {

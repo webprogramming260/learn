@@ -1,10 +1,11 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './topicList.css';
 
-export default function TopicList({topics}) {
+export default function TopicList({ course, onPathChange }) {
+  onPathChange?.('/', course.gitHubRoot);
   const topicSections: JSX.Element[] = [];
-  topics.forEach((section) => {
+  course.sections.forEach((section) => {
     const topicSection = <TopicSection key={section.title} section={section} />;
     topicSections.push(topicSection);
   });
@@ -12,7 +13,7 @@ export default function TopicList({topics}) {
   return <div>{topicSections}</div>;
 }
 
-function TopicSection({section}) {
+function TopicSection({ section }) {
   const [showTopic, setShowTopic] = React.useState(topicExists(section.title));
 
   const ol: JSX.Element[] = [];
@@ -48,7 +49,7 @@ function TopicSection({section}) {
   return <div></div>;
 }
 
-function Topic({topic}) {
+function Topic({ topic }) {
   function getDue(dueDate: Date) {
     if (dueDate) {
       const now = new Date();
@@ -60,7 +61,7 @@ function Topic({topic}) {
 
   return (
     <li key={topic.title}>
-      <NavLink className='px-4 hover:animate-pulse ' to={`/page/${topic.path}`}>
+      <NavLink className='px-4 hover:animate-pulse ' to={topic.path}>
         {topic.title}
       </NavLink>{' '}
       {getDue(topic.due)}
@@ -70,7 +71,7 @@ function Topic({topic}) {
 
 function topicExists(title: string): boolean {
   let topicFound = false;
-  const {openTopics: value}: Storage = window.localStorage;
+  const { openTopics: value }: Storage = window.localStorage;
   if (value) {
     const openTopics = JSON.parse(value);
     topicFound = openTopics.includes(title);
@@ -80,7 +81,7 @@ function topicExists(title: string): boolean {
 
 function storeTopicState(title: string, showTopic: boolean) {
   let topics: string[] = [];
-  const {openTopics: value}: Storage = window.localStorage;
+  const { openTopics: value }: Storage = window.localStorage;
   if (value) {
     topics = JSON.parse(value);
   }

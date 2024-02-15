@@ -7,15 +7,15 @@ import 'highlight.js/styles/github.css';
 import './page.css';
 import './github-markdown.css';
 
-export default function Page() {
+export default function Page({ course, onPathChange }) {
   const location = useLocation();
   const wildcard = useParams()['*'];
-  const gitHubRoot = 'https://github.com/webprogramming260/.github/blob/main/profile/';
-  const url = gitHubRoot + wildcard;
-  const gitHubUrl = url.replace('_', '.');
   const [htmlDoc, setHtmlDoc] = React.useState("<div style='height:120vh;'></div>");
 
   React.useEffect(() => {
+    const url = course.gitHubRoot + wildcard;
+    const gitHubUrl = url.replace('_', '.');
+    onPathChange?.(url, gitHubUrl);
     let rawUrl = gitHubUrl.replace(
       'github.com/webprogramming260/.github/blob',
       'raw.githubusercontent.com/webprogramming260/.github'
