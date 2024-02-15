@@ -5,8 +5,12 @@ import { BrowserRouter, Route, Routes, NavLink, Navigate } from 'react-router-do
 import ScrollToTop from './scrollToTop';
 
 const defaultCourse = {
-  gitHubRoot: 'https://github.com/webprogramming260/.github/blob/main/profile/',
   sections: [],
+  title: 'CS 260 - Web Programming',
+  repo: 'webprogramming260/.github',
+  contentPath: 'profile',
+  topicFile: 'instructionTopics.md',
+  canvasUrl: 'https://byu.instructure.com/courses/22526/assignments',
 };
 
 export default function App() {
@@ -28,8 +32,8 @@ export default function App() {
       <div className='h-screen text-stone-950 dark:text-stone-300 dark:bg-stone-900 flex flex-col'>
         <header className='flex flex-col'>
           <div className='h-12 border-b-4 border-stone-900 dark:border-stone-400 flex flex-row align-middle justify-between'>
-            <h1 className='font-bold min-h-fit p-4 text-stone-800 dark:text-stone-300'>CS 260 - Web Programming</h1>
-            <NavLink to='/page/schedule/schedule_md' className='min-h-fit p-4 text-blue-400 hover:underline'>
+            <h1 className='font-bold min-h-fit p-4 text-stone-800 dark:text-stone-300'>{course.title}</h1>
+            <NavLink to='/page/schedule/schedule_md' className='min-h-fit p-4 text-green-700 font-bold hover:underline'>
               Schedule
             </NavLink>
           </div>
@@ -95,12 +99,8 @@ function PageNav({ course, gitHubUrl }) {
 }
 
 async function loadCourse() {
-  const modulesUrl = 'https://github.com/webprogramming260/.github/blob/main/profile/instructionTopics.md';
-
-  const rawUrl = modulesUrl.replace(
-    'github.com/webprogramming260/.github/blob',
-    'raw.githubusercontent.com/webprogramming260/.github'
-  );
+  const course = defaultCourse;
+  const rawUrl = `https://raw.githubusercontent.com/${course.repo}/main/${course.contentPath}/${course.topicFile}`;
 
   const r = await fetch(rawUrl);
   const body = await r.text();
@@ -123,7 +123,7 @@ async function loadCourse() {
       sections.push({ title: blockMatch[1], topics: topics });
     }
   }
-  return { ...defaultCourse, sections: sections };
+  return { ...course, sections: sections };
 }
 
 function parseDate(textDate) {
