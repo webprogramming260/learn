@@ -4,8 +4,8 @@ import { useParams, useLocation } from 'react-router-dom';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js'; // Formats the code blocks
 import 'highlight.js/styles/github.css';
-import './page.css';
 import './github-markdown.css';
+import './page.css';
 
 export default function Page({ course, onPathChange }) {
   const location = useLocation();

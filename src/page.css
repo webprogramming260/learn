@@ -12,8 +12,13 @@
   color: rgb(133 135 226);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 760px) {
+  * {
+    font-size: 0.9em;
+  }
   .markdown-body {
-    padding: 15px;
+    padding: 5px;
+    background-color: hsl(43, 100%, 94%);
+    line-height: 1.25;
   }
 }

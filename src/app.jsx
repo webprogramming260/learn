@@ -33,6 +33,9 @@ export default function App() {
         <header className='flex flex-col'>
           <div className='h-12 border-b-4 border-stone-900 dark:border-stone-400 flex flex-row align-middle justify-between'>
             <h1 className='font-bold min-h-fit p-4 text-stone-800 dark:text-stone-300'>{course.title}</h1>
+            <NavLink to={course.canvasUrl} className='min-h-fit p-4 text-green-700 font-bold hover:underline'>
+              Canvas
+            </NavLink>
             <NavLink to='/page/schedule/schedule_md' className='min-h-fit p-4 text-green-700 font-bold hover:underline'>
               Schedule
             </NavLink>
@@ -89,7 +92,7 @@ function PageNav({ course, gitHubUrl }) {
   }
 
   return (
-    <div className='m-0 text-gray-200 bg-gray-800 justify-between flex px-6 py-3 text-lg'>
+    <div id='nav-bar' className='m-0 text-gray-200 bg-gray-800 justify-between flex px-6 py-1 text-lg'>
       <NavLink to={getPage('prev')}>Prev</NavLink>
       <NavLink to='/'>Topics</NavLink>
       <a href={gitHubUrl}>GitHub</a>
