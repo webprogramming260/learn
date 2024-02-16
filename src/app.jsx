@@ -19,6 +19,8 @@ export default function App() {
     setGitHubUrl(gitHubUrl);
   }
 
+  const schedulePath = `/page/${course.schedulePath.replaceAll('.', '_')}`;
+
   return (
     <BrowserRouter>
       <div className='h-screen text-stone-950 dark:text-stone-300 dark:bg-stone-900 flex flex-col'>
@@ -28,7 +30,7 @@ export default function App() {
             <NavLink to={course.canvasUrl} className='min-h-fit p-4 text-green-700 font-bold hover:underline'>
               Canvas
             </NavLink>
-            <NavLink to='/page/schedule/schedule_md' className='min-h-fit p-4 text-green-700 font-bold hover:underline'>
+            <NavLink to={schedulePath} className='min-h-fit p-4 text-green-700 font-bold hover:underline'>
               Schedule
             </NavLink>
           </div>

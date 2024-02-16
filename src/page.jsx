@@ -14,11 +14,11 @@ export default function Page({ course, onPathChange }) {
 
   React.useEffect(() => {
     const url = `https://github.com/${course.repo}/blob/main/${course.contentPath}/${wildcard}`;
-    const gitHubUrl = url.replace('_', '.');
+    const gitHubUrl = url.replaceAll('_', '.');
     onPathChange?.(url, gitHubUrl);
 
     let rawUrl = `https://raw.githubusercontent.com/${course.repo}/main/${course.contentPath}/${wildcard}`;
-    rawUrl = rawUrl.replace('_', '.');
+    rawUrl = rawUrl.replaceAll('_', '.');
     const [, rootUrl] = /(.*\/)([^\/]*)$/.exec(rawUrl);
 
     fetch(rawUrl)

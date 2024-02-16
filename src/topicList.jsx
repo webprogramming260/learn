@@ -7,8 +7,8 @@ export default function TopicList({ course, onPathChange }) {
 
   React.useEffect(() => {
     (async () => {
-      console.log('topicList ' + onPathChange);
-      onPathChange?.('/', course.gitHubRoot);
+      const gitHubRoot = `https://github.com/${course.repo}`;
+      onPathChange?.('/', gitHubRoot);
       const ts = [];
       course.sections.forEach((section) => {
         const topicSection = <TopicSection key={section.title} section={section} />;
