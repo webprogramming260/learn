@@ -3,15 +3,7 @@ import TopicList from './topicList';
 import Page from './page';
 import { BrowserRouter, Route, Routes, NavLink, Navigate } from 'react-router-dom';
 import ScrollToTop from './scrollToTop';
-
-const defaultCourse = {
-  sections: [],
-  title: 'CS 260 - Web Programming',
-  repo: 'webprogramming260/.github',
-  contentPath: 'profile',
-  topicFile: 'instructionTopics.md',
-  canvasUrl: 'https://byu.instructure.com/courses/22526/assignments',
-};
+import defaultCourse from './course.json';
 
 export default function App() {
   const [course, setCourse] = React.useState(defaultCourse);
