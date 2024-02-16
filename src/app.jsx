@@ -93,10 +93,18 @@ function PageNav({ course, gitHubUrl }) {
 
   return (
     <div id='nav-bar' className='m-0 text-gray-200 bg-gray-800 justify-between flex px-6 py-1 text-lg'>
-      <NavLink to={getPage('prev')}>Prev</NavLink>
-      <NavLink to='/'>Topics</NavLink>
-      <a href={gitHubUrl}>GitHub</a>
-      <NavLink to={getPage('next')}>Next</NavLink>
+      <NavLink className='p-1 hover:bg-gray-500 hover:underline' to={getPage('prev')}>
+        Prev
+      </NavLink>
+      <NavLink className='p-1 hover:bg-gray-500 hover:underline' to='/'>
+        Topics
+      </NavLink>
+      <NavLink className='p-1 hover:bg-gray-500 hover:underline' to={gitHubUrl}>
+        GitHub
+      </NavLink>
+      <NavLink className='p-1 hover:bg-gray-500 hover:underline' to={getPage('next')}>
+        Next
+      </NavLink>
     </div>
   );
 }
