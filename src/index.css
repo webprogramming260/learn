@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@100;400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    font-family: Montserrat, monospace;
+    font-family: Quicksand, Helvetica, Arial, sans-serif;
     background-color: white;
   }
 

@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@100;400;700&display=swap');
+
 .markdown-body {
+  font-family: Quicksand, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   box-sizing: border-box;
   min-width: 200px;
   max-width: 980px;
@@ -12,13 +15,12 @@
   color: rgb(133 135 226);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 500px) {
   * {
     font-size: 0.9em;
   }
   .markdown-body {
     padding: 5px;
-    background-color: hsl(43, 100%, 94%);
     line-height: 1.25;
   }
 }
