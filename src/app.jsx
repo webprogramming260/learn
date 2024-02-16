@@ -43,7 +43,7 @@ export default function App() {
           <PageNav course={course} gitHubUrl={gitHubUrl}></PageNav>
         </header>
         <main className='h-auto overflow-scroll'>
-          <ScrollToTop />
+          <ScrollToTop selector={'main'} />
           <Routes>
             <Route path='/' element={<TopicList course={course} onPathChange={pathChange} />} exact />
             <Route path='/page/*' element={<Page course={course} onPathChange={pathChange} />} />
