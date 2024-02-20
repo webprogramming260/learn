@@ -3,10 +3,9 @@ import TopicList from './topicList';
 import Page from './page';
 import { BrowserRouter, Route, Routes, NavLink, Navigate } from 'react-router-dom';
 import ScrollToTop from './scrollToTop';
-import defaultCourse from './course.json';
 
 export default function App() {
-  const [course, setCourse] = React.useState(defaultCourse);
+  const [course, setCourse] = React.useState({ sections: [], title: 'loading...' });
   const [gitHubUrl, setGitHubUrl] = React.useState('');
 
   React.useEffect(() => {
@@ -19,18 +18,16 @@ export default function App() {
     setGitHubUrl(gitHubUrl);
   }
 
-  const schedulePath = `/page/${course.schedulePath.replaceAll('.', '_')}`;
-
   return (
     <BrowserRouter>
       <div className='h-screen text-stone-950 dark:text-stone-300 dark:bg-stone-900 flex flex-col'>
         <header className='flex flex-col'>
           <div className='h-12 border-b-4 border-stone-900 dark:border-stone-400 flex flex-row align-middle justify-between'>
-            <h1 className='font-bold min-h-fit p-4 text-stone-800 dark:text-stone-300'>{course.title}</h1>
-            <NavLink to={course.canvasUrl} className='min-h-fit p-4 text-green-700 font-bold hover:underline'>
+            <h1 className='font-bold min-h-fit p-4 text-stone-800 dark:text-stone-300'>{course?.title}</h1>
+            <NavLink to={course?.canvasUrl} className='min-h-fit p-4 text-green-700 font-bold hover:underline'>
               Canvas
             </NavLink>
-            <NavLink to={schedulePath} className='min-h-fit p-4 text-green-700 font-bold hover:underline'>
+            <NavLink to={course?.scheduleUrl} className='min-h-fit p-4 text-green-700 font-bold hover:underline'>
               Schedule
             </NavLink>
           </div>
@@ -104,8 +101,11 @@ function PageNav({ course, gitHubUrl }) {
 }
 
 async function loadCourse() {
-  const course = defaultCourse;
+  const response = await fetch('/course.json');
+  const course = await response.json();
   const rawUrl = `https://raw.githubusercontent.com/${course.repo}/main/${course.contentPath}/${course.topicFile}`;
+  course.scheduleUrl = `/page/${course.schedulePath.replaceAll('.', '_')}`;
+  document.title = course.title;
 
   const r = await fetch(rawUrl);
   const body = await r.text();

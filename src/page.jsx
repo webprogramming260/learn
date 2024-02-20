@@ -13,28 +13,30 @@ export default function Page({ course, onPathChange }) {
   const [htmlDoc, setHtmlDoc] = React.useState("<div style='height:120vh;'></div>");
 
   React.useEffect(() => {
-    const url = `https://github.com/${course.repo}/blob/main/${course.contentPath}/${wildcard}`;
-    const gitHubUrl = url.replaceAll('_', '.');
-    onPathChange?.(url, gitHubUrl);
+    if (course.repo) {
+      const url = `https://github.com/${course.repo}/blob/main/${course.contentPath}/${wildcard}`;
+      const gitHubUrl = url.replaceAll('_', '.');
+      onPathChange?.(url, gitHubUrl);
 
-    let rawUrl = `https://raw.githubusercontent.com/${course.repo}/main/${course.contentPath}/${wildcard}`;
-    rawUrl = rawUrl.replaceAll('_', '.');
-    const [, rootUrl] = /(.*\/)([^\/]*)$/.exec(rawUrl);
+      let rawUrl = `https://raw.githubusercontent.com/${course.repo}/main/${course.contentPath}/${wildcard}`;
+      rawUrl = rawUrl.replaceAll('_', '.');
+      const [, rootUrl] = /(.*\/)([^\/]*)$/.exec(rawUrl);
 
-    fetch(rawUrl)
-      .then((r) => r.text())
-      .then((body) => {
-        const reg = /\!\[(.*)\]\((.*)\)/g;
-        const up = body.replaceAll(reg, `![$1](${rootUrl}$2)`);
+      fetch(rawUrl)
+        .then((r) => r.text())
+        .then((body) => {
+          const reg = /\!\[(.*)\]\((.*)\)/g;
+          const up = body.replaceAll(reg, `![$1](${rootUrl}$2)`);
 
-        let renderedHtml = md.render(up);
-        renderedHtml = renderedHtml.replaceAll('&lt;/br&gt;', '</br>');
-        renderedHtml = renderedHtml.replaceAll('.md"', '_md"');
-        renderedHtml = renderedHtml.replaceAll('Canvas', `<a href='${course.canvasUrl}'>Canvas</a>`);
+          let renderedHtml = md.render(up);
+          renderedHtml = renderedHtml.replaceAll('&lt;/br&gt;', '</br>');
+          renderedHtml = renderedHtml.replaceAll('.md"', '_md"');
+          renderedHtml = renderedHtml.replaceAll('Canvas', `<a href='${course.canvasUrl}'>Canvas</a>`);
 
-        setHtmlDoc(renderedHtml);
-      });
-  }, [location]);
+          setHtmlDoc(renderedHtml);
+        });
+    }
+  }, [location, course]);
 
   return (
     <>
