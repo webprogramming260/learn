@@ -19,7 +19,7 @@ export default function Content({ url, rootUrl, canvasUrl }) {
           const reg = /\!\[(.*)\]\((.*)\)/g;
           const up = body.replaceAll(reg, `![$1](${rootUrl}$2)`);
 
-          let renderedHtml = md.render(up);
+          let renderedHtml = codeHighlighter.render(up);
           renderedHtml = renderedHtml.replaceAll('&lt;/br&gt;', '</br>');
           renderedHtml = renderedHtml.replaceAll('.md"', '_md"');
           renderedHtml = renderedHtml.replaceAll(
@@ -45,7 +45,8 @@ export default function Content({ url, rootUrl, canvasUrl }) {
   );
 }
 
-const md = MarkdownIt({
+// Code block formatting
+const codeHighlighter = MarkdownIt({
   highlight: function (str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
